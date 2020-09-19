@@ -6,7 +6,7 @@ const StylesAuth = StyleSheet.create({
     backgroundColor:'#f75252',
   },
   statusBar:{
-    backgroundColor:'#009387',
+    backgroundColor:'#f75252',
   },
   header: {
     flex: 1,
@@ -15,7 +15,7 @@ const StylesAuth = StyleSheet.create({
     paddingBottom: 50,
   },
   footer: {
-    flex: 5,
+    flex: 8,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,

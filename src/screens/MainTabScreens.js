@@ -1,16 +1,18 @@
 import React from 'react';
 
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 
-import Home from '../components/Home';
+
+import Menu from '../components/Menu';
 import Cart from '../components/Cart';
 import Profile from '../components/Profile';
 
-
 const Tab = createBottomTabNavigator();
-
 
 const MainTabScreens = ()=>{
   return (
@@ -22,7 +24,7 @@ const MainTabScreens = ()=>{
       >
         <Tab.Screen
           name="Home"
-          component={Home}
+          component={Menu}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => (
@@ -31,14 +33,13 @@ const MainTabScreens = ()=>{
           }}
         />
         <Tab.Screen
-          name="Cart"
+          name="My Order"
           component={Cart}
           options={{
-            tabBarLabel: 'Cart',
+            tabBarLabel: 'My Order',
             tabBarIcon: ({ color, size }) => (
-              <Icon name="cart" color={color} size={size} />
+              <MaterialIcon name="list-alt" color={color} size={size} />
             ),
-            tabBarBadge:0,
           }}
         />
         <Tab.Screen

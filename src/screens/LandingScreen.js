@@ -1,44 +1,57 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity,Image, Dimensions, StatusBar } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import * as Animatable from 'react-native-animatable';
+import SafeAreaView from 'react-native-safe-area-view';
 
 const LandingScreen = ({navigation}) => {
   return (
-    <View style={Styles.container}>
+    <SafeAreaView style={Styles.container}>
+      <StatusBar style ={Styles.statusBar} barStyle="light-content"/>
       <View style={Styles.header}>
-        <Text>Heade</Text>
+        <Animatable.Image
+        animation="bounceIn"
+        duraton="3000"
+        style={Styles.logo}
+        resizeMode="stretch"
+        source={require('../../assets/logo.png')}/>
       </View>
-      <View style={Styles.footer}>
+      <Animatable.View
+      animation="fadeInUpBig"
+      style={Styles.footer}>
         <Text style={Styles.title}>Happy Meals</Text>
         <Text style={Styles.text}>Sign in with account</Text>
         <TouchableOpacity style={Styles.wrapperButton} onPress={()=>navigation.navigate('Log In')}>
           <View style={Styles.button}>
             <Text style={Styles.buttonText}>Get Started</Text>
-            <MaterialIcons name="navigate-next" color="#f75252" size={20}/>
+            <MaterialIcons name="navigate-next" color="white" size={20}/>
           </View>
         </TouchableOpacity>
-      </View>
-    </View>
+      </Animatable.View>
+    </SafeAreaView>
   );
 };
+
 
 const Styles = StyleSheet.create({
   container:{
     flex:1,
-    backgroundColor:'white',
+    backgroundColor: '#f75252',
   },
   statusBar:{
-    backgroundColor:'#009387',
+    backgroundColor:'#f75252',
   },
   header: {
     flex: 2,
-    justifyContent: 'flex-end',
-    paddingHorizontal: 20,
-    paddingBottom: 50,
+    justifyContent: 'center',
+    alignContent:'center',
+  },
+  logo: {
+    alignSelf:'center',
   },
   footer: {
+    backgroundColor:'white',
     flex: 1,
-    backgroundColor: '#f75252',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
@@ -47,10 +60,10 @@ const Styles = StyleSheet.create({
   title:{
     fontSize:35,
     fontWeight:'bold',
-    color:'white',
+    color:'#f75252',
   },
   text:{
-    color:'white',
+    color:'#f75252',
     margin:10,
   },
   wrapperButton:{
@@ -62,13 +75,13 @@ const Styles = StyleSheet.create({
     height: 40,
     margin:10,
     justifyContent: 'center',
-    backgroundColor:'white',
+    backgroundColor:'#f75252',
     alignItems:'center',
     borderRadius:25,
     flexDirection:'row',
   },
   buttonText:{
-    color:'#f75252',
+    color:'white',
     fontWeight:'bold',
     fontSize:16,
   },

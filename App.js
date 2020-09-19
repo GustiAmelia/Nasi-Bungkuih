@@ -1,34 +1,56 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-// import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Login from './src/components/Login';
-import Register from './src/components/Register';
-// import MainTabScreens from './src/shared/MainTabScreens';
-import LandingScreen from './src/components/LandingScreen';
+import React,{useEffect} from 'react';
+import {useSelector} from 'react-redux';
 
-// const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
+import {View, ActivityIndicator, StyleSheet,Image} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import RootStackScreen from './src/screens/RootStackScreen';
+import MainTabScreens from './src/screens/MainTabScreens';
+
+
+const Stack = createStackNavigator();
 
 const App = () => {
+
+  const login = useSelector((state)=>state.auth.isLoggedIn);
+
+  const [isLoading, setIsLoading ] = React.useState(true);
+
+  useEffect(() => {
+    setTimeout(()=>{
+      setIsLoading(false);
+    },1000);
+  }, []);
+
+  if (isLoading){
+    return (
+      <View style={Styles.loading}>
+        <Image source={require('./assets/logo.png')}/>
+        {/* <ActivityIndicator size="large" color="pink" /> */}
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name ="Welcome" component={LandingScreen}/>
-        <Drawer.Screen name ="Log In" component={Login}/>
-        <Drawer.Screen name ="Sign Up" component={Register}/>
-        {/* <Drawer.Screen name="Log In" component={Login} />
-        <Drawer.Screen name="Sign Up" component={Register}/> */}
-        {/* <Drawer.Screen name ="Home" component={MainTabScreens}/> */}
-      </Drawer.Navigator>
+      {login === true ? (
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen options={{headerShown:false}} name ="Home" component={MainTabScreens}/>
+        </Stack.Navigator>
+      )
+      :
+      <RootStackScreen/>}
     </NavigationContainer>
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     <Stack.Screen name="Log In" component={Login} />
-    //     <Stack.Screen name="Sign Up" component={Register} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
   );
 };
+
+const Styles = StyleSheet.create({
+  loading:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+  },
+});
 
 export default App;
