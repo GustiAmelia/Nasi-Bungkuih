@@ -7,6 +7,7 @@ const initialState = {
   isRejected: false,
   data :null,
   isAdmin:false,
+  msg:null,
 };
 
 const authReducers = (state = initialState,action) => {
@@ -42,7 +43,8 @@ const authReducers = (state = initialState,action) => {
         ...state,
         isFulfilled: true,
         isPending: false,
-        data: action.payload.data,
+        data: action.payload.data.results,
+        msg:action.payload.data.results.msg,
         isRejected: false,
         isAdmin: admin,
         isLoggedIn: login,

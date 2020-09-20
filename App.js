@@ -8,6 +8,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RootStackScreen from './src/screens/RootStackScreen';
 import MainTabScreens from './src/screens/MainTabScreens';
 
+// import AsyncStorage from '@react-native-community/async-storage';
+
 
 const Stack = createStackNavigator();
 

@@ -3,24 +3,24 @@ import React from 'react';
 import { useSelector} from 'react-redux';
 
 import {View, Text, StatusBar, StyleSheet, Image,FlatList, TouchableOpacity} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ItemCart from './itemCart';
 
 
-const Cart = () => {
+const Cart = ({navigation}) => {
+
   const carts = useSelector((state)=>state.menu.carts);
-  let totalPrice = carts.reduce((total, item) => { return total + (item.price * item.quantity);}, 0);
-  totalPrice = totalPrice.toLocaleString('id',{style:'currency',currency:'IDR'});
+
+  const totalPrice = carts.reduce((total, item) => { return total + (item.price * item.quantity);}, 0);
+  const stringTotalPrice = totalPrice.toLocaleString('id',{style:'currency',currency:'IDR'});
+  const ppn = (10 * totalPrice) / 100;
+  const stringPpn = ppn.toLocaleString('id',{style:'currency',currency:'IDR'});
+  const totalPayment = totalPrice + ppn;
+  const stringTotalPayment = totalPayment.toLocaleString('id',{style:'currency',currency:'IDR'});
+
   return (
     <View style={Styles.container}>
         <StatusBar style ={Styles.statusBar} barStyle="light-content"/>
-        <View style={Styles.header}>
-            <Text style={Styles.text_header}>My Order</Text>
-            {/* <Pressable>
-              <Icon style={Styles.iconCart} name="cart"/>
-            </Pressable> */}
-        </View>
-        <View style={Styles.footer}>
+        <View style={Styles.content}>
           {carts.length === 0 ? (
             <View style={Styles.contentFooter}>
               <Image source={require('../../assets/food-and-restaurant.png')}/>
@@ -29,21 +29,52 @@ const Cart = () => {
           </View>
           )
           :
-          <FlatList
-            data={carts}
-            renderItem={({item})=>{
-              return (
-                <ItemCart item={item}/>
-              );
-            }}
-            />}
+          (
+          <>
+            <View style={Styles.titleWrapper}>
+              <View>
+               <Text style={Styles.textTitle}>Order item(s)</Text>
+              </View>
+              <View>
+                <TouchableOpacity onPress={()=>navigation.navigate('Home')}>
+                  <Text style={Styles.textAdd}>+ Add more</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <FlatList
+              data={carts}
+              renderItem={({item})=>{
+                return (
+                  <ItemCart item={item}/>
+                );
+              }}
+              />
+              <View style={Styles.space}/>
+            <View style={Styles.paymantWrapper}>
+              <View>
+                <Text style={Styles.textTitle}>Payment Details</Text>
+              </View>
+              <View style={Styles.payment}>
+                <View style={Styles.paymentContent}>
+                  <Text>Price (estimated)</Text>
+                  <Text>{stringTotalPrice}</Text>
+                </View>
+                <View style={Styles.paymentContent}>
+                  <Text>Ppn 10%</Text>
+                  <Text>{stringPpn}</Text>
+                </View>
+              </View>
+              <View style={Styles.paymentContent}>
+                <Text >Total payment</Text>
+                <Text>{stringTotalPayment}</Text>
+              </View>
+            </View>
+            <View style={Styles.space}/>
+          </>
+            )}
         </View>
         {carts.length !== 0 ? (
           <View style={Styles.checkout}>
-            <View style={Styles.totalWrapper}>
-              <Text style={Styles.textTotal}>TOTAL</Text>
-              <Text style={Styles.total}>{totalPrice}</Text>
-            </View>
             <TouchableOpacity >
               <Text style={Styles.buttonCheckout}>Checkout</Text>
             </TouchableOpacity>
@@ -61,29 +92,11 @@ const Styles = StyleSheet.create({
   },
   container:{
     flex:1,
-    backgroundColor:'white',
   },
-  header:{
-    flex:1,
-    alignItems:'center',
-    width:'100%',
-    backgroundColor:'#f75252',
-    flexDirection:'row',
-    justifyContent:'center',
-  },
-  text_header:{
-    fontSize:25,
-    fontWeight:'bold',
-    color:'#f75252',
-    backgroundColor:'white',
-    paddingVertical:2,
-    paddingHorizontal:10,
-    borderRadius:10,
-  },
-  footer:{
+  content:{
     flex:9,
     justifyContent:'center',
-    backgroundColor:'white',
+    backgroundColor:'#fff',
     paddingTop:15,
   },
   contentFooter :{
@@ -95,6 +108,37 @@ const Styles = StyleSheet.create({
   },
   msg:{
     color:'grey',
+  },
+  titleWrapper:{
+    marginHorizontal:20,
+    borderBottomWidth:0.4,
+    flexDirection:'row',
+    justifyContent:'space-between',
+  },
+  textTitle:{
+    marginBottom:10,
+    fontSize:18,
+    fontWeight:'bold',
+  },
+  textAdd:{
+    marginBottom:10,
+    fontSize:18,
+    fontWeight:'bold',
+    color:'#f75252',
+  },
+  paymantWrapper:{
+    marginBottom:5,
+    marginTop:10,
+    marginHorizontal:20,
+  },
+  payment:{
+    borderTopWidth:0.4,
+    paddingTop:10,
+  },
+  paymentContent:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    marginVertical:5,
   },
   checkout:{
     backgroundColor:'white',
@@ -124,6 +168,12 @@ const Styles = StyleSheet.create({
     fontWeight:'bold',
     paddingVertical:5,
     borderRadius:10,
+  },
+  space:{
+    backgroundColor:'grey',
+    opacity:0.3,
+    width:'100%',
+    height:5,
   },
 });
 

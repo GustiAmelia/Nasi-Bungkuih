@@ -11,8 +11,8 @@ import {getLogin} from '../redux/actions/auth';
 const Login = ({navigation}) => {
 
   const login = useSelector((state)=>state.auth.isLoggedIn);
-  // const user = useSelector((state)=>state.auth.data);
-  // console.log(user);
+  const msg = useSelector((state)=>state.auth.msg);
+
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({ email: null,password: null});
@@ -25,11 +25,17 @@ const Login = ({navigation}) => {
   };
 
 
-  useEffect(()=>{
-    if (login){
-      return navigation.navigate('Home');
-    }
-  });
+  const alertInvalidUser = ()=>{
+    Alert.alert(
+      'Invalid user',
+      'Username or password is incorrect'
+    );
+  };
+
+
+  if (login){
+    return navigation.navigate('Home');
+  }
 
 const updateSecureTextEntry = () => {
     setData({
