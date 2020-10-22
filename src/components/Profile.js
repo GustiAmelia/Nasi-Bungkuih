@@ -47,7 +47,7 @@ const Profile = ({navigation}) => {
           <Text style={Styles.contact}>jungkook@gmail.com</Text>
         </View>
       </View>
-      <TouchableOpacity style={Styles.edit}>
+      <TouchableOpacity style={Styles.edit} onPress={()=>navigation.navigate('EditProfile')}>
         <MaterialIcon name="edit" color="white" size={30}/>
       </TouchableOpacity>
     </View>

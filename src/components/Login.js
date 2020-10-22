@@ -1,17 +1,12 @@
 import React, {useState,useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {View, Text, TextInput, StatusBar, TouchableOpacity,TouchableWithoutFeedback,Keyboard,Alert} from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+import {View, Text, TextInput, StatusBar, TouchableOpacity,TouchableWithoutFeedback,Keyboard,Alert,StyleSheet,Platform,ScrollView} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import CustomButton from '../shared/CustomButton';
-import Styles from './StylesAuth';
 import {getLogin} from '../redux/actions/auth';
 
 
 const Login = ({navigation}) => {
-
-  const login = useSelector((state)=>state.auth.isLoggedIn);
-  const msg = useSelector((state)=>state.auth.msg);
 
   const dispatch = useDispatch();
 
@@ -21,16 +16,13 @@ const Login = ({navigation}) => {
   });
 
   const handleSignIn = ()=>{
+    console.log('login');
     dispatch(getLogin(form.email,form.password));
   };
 
-
-  const alertInvalidUser = ()=>{
-    Alert.alert(
-      'Invalid user',
-      'Username or password is incorrect'
-    );
-  };
+  const login = useSelector((state)=>state.auth.isLoggedIn);
+  const isLoginSuccess = useSelector((state)=>state.auth.isLoginSuccess);
+  const msg = useSelector((state)=>state.auth.msg);
 
 
   if (login){
@@ -46,12 +38,15 @@ const updateSecureTextEntry = () => {
 
   return (
     <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-      <SafeAreaView style={Styles.container}>
-        <StatusBar style ={Styles.statusBar} barStyle="light-content"/>
+      <View style={Styles.container}>
+        <StatusBar style ={Styles.statusBar} barStyle="light-content" backgroundColor="#f75252"/>
         <View style={Styles.header}>
-              <Text style={Styles.text_header}>Log in to your account</Text>
-          </View>
-          <View style={Styles.footer}>
+          <Text style={Styles.text_header}>Log in to your account</Text>
+        </View>
+        <View style={Styles.footer}>
+          <ScrollView>
+            {isLoginSuccess ? null :
+            <Text style={Styles.errorMessage}>Incorrect username or password!</Text>}
             <Text style={Styles.text_footer}>Email</Text>
             <View style={Styles.wrapperInput}>
               <TextInput style={Styles.textInput}
@@ -83,7 +78,7 @@ const updateSecureTextEntry = () => {
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={Styles.forgot}>
-              <Text style={Styles.textLink}>Forgot password?</Text>
+              <Text style={Styles.textForgot}>Forgot password?</Text>
             </TouchableOpacity>
             <CustomButton text="LOG IN" onPress={handleSignIn}/>
             <View style={Styles.question}>
@@ -92,10 +87,79 @@ const updateSecureTextEntry = () => {
                 <Text style={Styles.textLink} onPress={()=>navigation.navigate('Sign Up')}>Sign up</Text>
               </TouchableOpacity>
             </View>
-          </View>
-      </SafeAreaView>
+          </ScrollView>
+        </View>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
 
 export default Login;
+
+const Styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'#f75252',
+  },
+  statusBar:{
+    backgroundColor:'#f75252',
+  },
+  header: {
+    flex: 2,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  footer: {
+    flex: 4,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingTop:30,
+  },
+  text_header: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  text_footer: {
+    marginTop:10,
+    color: '#05375a',
+    fontSize: 18,
+  },
+  wrapperInput:{
+    marginTop:10,
+    flexDirection: 'row',
+    borderBottomWidth:1,
+    borderBottomColor:'grey',
+  },
+  textInput: {
+    flex:1,
+    marginTop:Platform.OS === 'ios' ? 0 : -12,
+    paddingLeft: 10,
+    color: '#05375a',
+    padding:8,
+  },
+  forgot:{
+    marginVertical:20,
+    marginLeft:'55%',
+  },
+  textLink: {
+    color:'#f75252',
+    textAlign:'right',
+  },
+  textForgot:{
+    color:'#05375a',
+    textAlign:'right',
+  },
+  question:{
+    marginTop:20,
+    flexDirection:'row',
+    justifyContent:'center',
+  },
+  errorMessage:{
+    color:'red',
+    textAlign:'center',
+    fontSize:16,
+  },
+});

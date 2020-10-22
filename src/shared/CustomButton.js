@@ -15,12 +15,12 @@ export default CustomButton;
 const Styles = StyleSheet.create({
   button:{
     width: '100%',
-    height: 50,
-    margin:10,
+    height: 45,
     justifyContent: 'center',
     backgroundColor:'#f75252',
     alignItems:'center',
     borderRadius:25,
+    marginTop:30,
   },
   buttonText:{
     color:'white',

@@ -8,6 +8,7 @@ const initialState = {
   data :null,
   isAdmin:false,
   msg:null,
+  isLoginSuccess:true,
 };
 
 const authReducers = (state = initialState,action) => {
@@ -48,6 +49,7 @@ const authReducers = (state = initialState,action) => {
         isRejected: false,
         isAdmin: admin,
         isLoggedIn: login,
+        isLoginSuccess:action.payload.data.isSuccess,
       };
     case actions.isLoggedOut:
       return {

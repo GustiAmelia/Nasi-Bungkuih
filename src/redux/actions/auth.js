@@ -10,10 +10,10 @@ export const getLogin = (email,password)=>{
 };
 
 
-export const getRegister = (fullname,username,email,phone,password)=>{
+export const getRegister = (username,email,password)=>{
   return {
     type:actions.fetchLogin,
-    payload:register(fullname,username,email,phone,password),
+    payload:register(username,email,password),
   };
 };
 

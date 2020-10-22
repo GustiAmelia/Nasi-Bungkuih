@@ -3,6 +3,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -11,8 +12,11 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import Menu from '../components/Menu';
 import Cart from '../components/Cart';
 import Profile from '../components/Profile';
+import EditProfile from '../components/EditProfile';
 
 const Tab = createBottomTabNavigator();
+const ProfileStack = createStackNavigator();
+
 
 const MainTabScreens = ()=>{
 
@@ -64,7 +68,7 @@ const MainTabScreens = ()=>{
         )}
         <Tab.Screen
           name="Profile"
-          component={Profile}
+          component={ProfileStackScreen}
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color, size }) => (
@@ -77,3 +81,10 @@ const MainTabScreens = ()=>{
 };
 
 export default MainTabScreens;
+
+const ProfileStackScreen = ()=>(
+  <ProfileStack.Navigator>
+    <ProfileStack.Screen options={{headerShown:false}} name="Profile" component={Profile}/>
+    <ProfileStack.Screen options={{title:'Edit Profile'}} name="EditProfile" component={EditProfile}/>
+  </ProfileStack.Navigator>
+);

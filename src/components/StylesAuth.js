@@ -9,10 +9,10 @@ const StylesAuth = StyleSheet.create({
     backgroundColor:'#f75252',
   },
   header: {
-    flex: 1,
-    justifyContent: 'flex-end',
+    flex: 2,
+    justifyContent: 'center',
     paddingHorizontal: 20,
-    paddingBottom: 50,
+    // paddingBottom: 50,
   },
   footer: {
     flex: 8,
@@ -20,7 +20,8 @@ const StylesAuth = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingTop:30,
+    // paddingBottom:60,
   },
   text_header: {
     color: '#fff',

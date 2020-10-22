@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {View, StatusBar, StyleSheet, TextInput, FlatList,Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CardHome from './CardMenuHome';
 import {getAllMenus} from '../redux/actions/menu';
 import {getAllCategory} from '../redux/actions/category';
+import {searchMenuCreator} from '../redux/actions/serachMenu';
 
 const Menu = () => {
 
+  // const [menu, setMenu] = useState(null);
   const category = useSelector(state=>state.category.category);
 
   const dispatch = useDispatch();
@@ -16,13 +18,18 @@ const Menu = () => {
      dispatch(getAllMenus());
   }, [dispatch]);
 
+
   return (
     <View style={Styles.container}>
-      <StatusBar style ={Styles.statusBar} barStyle="light-content"/>
+      <StatusBar style ={Styles.statusBar} barStyle="light-content" backgroundColor="#f75252"/>
       <View style={Styles.header}>
         <View style={Styles.search}>
           <TextInput style={Styles.textInput}
             placeholder="Search for dish or meal"
+            // onChangeText={(val)=>setMenu(val)}
+            // onSubmitEditing={()=>{dispatch(searchMenuCreator(menu,'menu'));
+            // setMenu(null);
+            // }}
             />
           <Pressable>
             <Icon style={Styles.iconSearch} name="search-outline"/>
